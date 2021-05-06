@@ -8,8 +8,6 @@ const NotAuth = require('../errors/not-auth');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-
-
 const getUser = (req, res, next) => {
   User.findOne({ _id: req.user._id })
 
@@ -90,8 +88,6 @@ const updateUser = (req, res, next) => {
       }
     });
 };
-
-
 
 module.exports = {
   getUser,

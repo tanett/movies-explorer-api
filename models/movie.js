@@ -10,11 +10,11 @@ const movieSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Поле обязательно'],
     },
-    duration:  {
+    duration: {
       type: Number,
       required: [true, 'Поле обязательно'],
     },
-    year:  {
+    year: {
       type: Number,
       required: [true, 'Поле обязательно'],
       validate: {
@@ -71,14 +71,15 @@ const movieSchema = new mongoose.Schema(
       ref: 'user',
       required: true,
     },
-      nameRU: {
+    nameRU: {
       type: String,
       required: [true, 'Поле обязательно'],
-  },
+    },
     nameEN: {
       type: String,
       required: [true, 'Поле обязательно'],
-    },}
+    },
+  },
 );
 
 module.exports = mongoose.model('movie', movieSchema);

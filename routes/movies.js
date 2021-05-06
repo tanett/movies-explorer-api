@@ -7,7 +7,7 @@ const {
 
 router.get('/', getMovies);
 
-router.post('/', celebrate({// country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
+router.post('/', celebrate({ // country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
   body: Joi.object().keys({
     country: Joi.string().required().min(2).max(50),
     director: Joi.string().required().min(2).max(50),
@@ -42,7 +42,5 @@ router.delete('/:movieId', celebrate({
     movieId: Joi.string().hex().required().length(24),
   }),
 }), deleteMovie);
-
-
 
 module.exports = router;

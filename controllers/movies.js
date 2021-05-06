@@ -4,14 +4,30 @@ const NotValid = require('../errors/not-valid-data');
 
 const NotAccess = require('../errors/not-access');
 
-const createMovie = (req, res, next) => {        // country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
+const createMovie = (req, res, next) => {
   const userId = req.user._id;
-  const { country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId } = req.body;
+  const {
+    country, director, duration, year, description, image,
+    trailer, nameRU, nameEN, thumbnail, movieId,
+  } = req.body;
   // if (!req.body.name || !req.body.link) {
   //   next(new NotValid('Некорректные данные'));
   // }
 
-  Movie.create({ country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId, owner: userId })
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+    owner: userId,
+  })
     .then((movie) => res.send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
@@ -49,8 +65,6 @@ const deleteMovie = (req, res, next) => {
     });
 };
 
-
-
 module.exports = {
-  getMovies, createMovie, deleteMovie
+  getMovies, createMovie, deleteMovie,
 };

@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors, celebrate, Joi } = require('celebrate');
-const isUrl = require('validator/lib/isURL');
+
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { createUser, login } = require('./controllers/users');
@@ -41,7 +41,6 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().email().required(),
@@ -55,7 +54,6 @@ app.post('/signup', celebrate({
     password: Joi.string().required().min(4),
   }),
 }), createUser);
-
 
 app.use(router);
 
