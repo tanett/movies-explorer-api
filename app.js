@@ -26,8 +26,8 @@ const corsOptions = {
   origin: [
     'https://films.shadrina.nomoredomains.icu',
     'http://films.shadrina.nomoredomains.icu',
-    'https://api.mesto.full.nomoredomains.icu', // поменять адреса
-    'https://api.mesto.full.nomoredomains.icu',
+    'https://api.films.shadrina.nomoredomains.icu',
+    'https://api.films.shadrina.nomoredomains.icu',
     'http://localhost:3000',
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
