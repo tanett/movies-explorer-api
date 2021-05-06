@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const { apiLimiter } = require('./middlewares/rateLimit');
 const { errors, celebrate, Joi } = require('celebrate');
 
 const bodyParser = require('body-parser');
@@ -40,6 +41,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(requestLogger);
+app.use(apiLimiter);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
