@@ -2,21 +2,21 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const { apiLimiter } = require('./middlewares/rateLimit');
-const { errors, celebrate, Joi } = require('celebrate');
+const { errors } = require('celebrate');
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const { createUser, login } = require('./controllers/users');
+const { apiLimiter } = require('./middlewares/rateLimit');
+
 const router = require('./routes/routes');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000, URIDB = 'mongodb://localhost:27017/savefilmsdb' } = process.env;
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/savefilmsdb', {
+mongoose.connect(URIDB, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -28,7 +28,7 @@ const corsOptions = {
     'https://films.shadrina.nomoredomains.icu',
     'http://films.shadrina.nomoredomains.icu',
     'https://api.films.shadrina.nomoredomains.icu',
-    'https://api.films.shadrina.nomoredomains.icu',
+    'http://api.films.shadrina.nomoredomains.icu',
     'http://localhost:3000',
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
@@ -43,25 +43,10 @@ app.use(bodyParser.json());
 app.use(requestLogger);
 app.use(apiLimiter);
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().email().required(),
-    password: Joi.string().required().min(4),
-  }),
-}), login);
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().email().required(),
-    password: Joi.string().required().min(4),
-  }),
-}), createUser);
-
 app.use(router);
 
 app.use(errorLogger);
 
-/* eslint-disable  no-unused-vars */
 app.use(errors()); // обработчик ошибок celebrate
 
 app.use((err, req, res, next) => {
@@ -73,6 +58,7 @@ app.use((err, req, res, next) => {
         ? 'На сервере произошла ошибка'
         : message,
     });
+  next();
 });
 
 app.listen(PORT, () => {

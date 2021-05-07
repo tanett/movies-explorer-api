@@ -39,7 +39,7 @@ const createMovie = (req, res, next) => {
 };
 
 const getMovies = (req, res, next) => {
-  Movie.find({}).populate('owner').then((movies) => res.send(movies))
+  Movie.find({}).then((movies) => res.send(movies))
     .catch(next);
 };
 
@@ -51,7 +51,7 @@ const deleteMovie = (req, res, next) => {
       if (movie.owner.toString() !== req.user._id) {
         throw new NotAccess('Вы не можете удалить этот фильм');
       } else {
-        Movie.deleteOne({ _id: movieId })
+        return Movie.deleteOne({ _id: movieId })
           .then(() => res.status(200).send({ message: 'Фильм удален' }));
       }
     })

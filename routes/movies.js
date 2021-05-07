@@ -34,6 +34,7 @@ router.post('/', celebrate({ // country, director, duration, year, description, 
     }),
     nameRU: Joi.string().required().min(2).max(100),
     nameEN: Joi.string().required().min(2).max(100),
+    movieId: Joi.number().required(),
   }),
 }), createMovie);
 

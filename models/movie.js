@@ -20,10 +20,10 @@ const movieSchema = new mongoose.Schema(
       validate: {
 
         validator: (v) => {
-          const regexp = /1|2\d{3}/gi;
+          const regexp = /(19|20)\d\d/gi;
           return regexp.test(v);
         },
-        message: 'Поле "year" должно быть годом в формате ХХХХ и начинаться с 1 или 2',
+        message: 'Поле "year" должно быть годом в формате ХХХХ ',
       },
     },
     description: {
@@ -77,6 +77,10 @@ const movieSchema = new mongoose.Schema(
     },
     nameEN: {
       type: String,
+      required: [true, 'Поле обязательно'],
+    },
+    movieId: {
+      type: Number,
       required: [true, 'Поле обязательно'],
     },
   },

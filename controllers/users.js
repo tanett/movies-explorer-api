@@ -79,7 +79,11 @@ const updateUser = (req, res, next) => {
       res.status(200).send({ user });
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        const error = new Error('Этот емайл уже занят');
+        error.statusCode = 409;
+        next(error);
+      } else if (err.name === 'ValidationError') {
         next(new NotValid(`${Object.values(err.errors).map((error) => error.message).join(', ')}`));
       } else if (err.name === 'CastError') {
         next(new NotFoundError('Пользователь не найден'));
