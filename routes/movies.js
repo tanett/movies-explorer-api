@@ -13,7 +13,7 @@ router.post('/', celebrate({ // country, director, duration, year, description, 
     director: Joi.string().required().min(2).max(150),
     duration: Joi.number().required(),
     year: Joi.number().required(),
-    description: Joi.string().required().min(2).max(1000),
+    description: Joi.string().required().min(2).max(2000),
     image: Joi.string().required().custom((value, helper) => {
       if (isUrl(value, { require_protocol: true })) {
         return value;
